@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Открыть в Xianyu</title>
+<style>body{font-family:system-ui,sans-serif;background:#111;color:#eee;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;margin:0}a{color:#6cf}</style></head>
+<body><div><p id="m">Открываю в приложении Xianyu…</p><p><a id="app" href="#">Открыть в приложении</a><br><br><a id="web" href="#">Открыть в браузере</a></p></div>
+<script>
+var id=(new URLSearchParams(location.search).get("id")||"").replace(/\D/g,"");
+var web="https://www.goofish.com/item?id="+id;
+var isAndroid=/android/i.test(navigator.userAgent);
+var app=isAndroid
+ ? "intent://item?id="+id+"#Intent;scheme=fleamarket;package=com.taobao.idlefish;S.browser_fallback_url="+encodeURIComponent(web)+";end"
+ : "fleamarket://item?id="+id;
+document.getElementById("app").href=app;
+document.getElementById("web").href=web;
+if(id){ setTimeout(function(){location.href=app;},150);
+        if(!isAndroid) setTimeout(function(){document.getElementById("m").textContent="Если приложение не открылось, нажми ссылку ниже";},1800);
+}else{document.getElementById("m").textContent="Нет id товара";}
+</script></body></html>
